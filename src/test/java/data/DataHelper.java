@@ -1,189 +1,154 @@
 package data;
 
-
 import com.github.javafaker.Faker;
-import lombok.Value;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.lang.Math;
+import java.util.Random;
 
 public class DataHelper {
 
-    private String generateDate(int addDays, int addMonths, int addYears, String pattern) {
-        return LocalDate.now().plusDays(addDays).format(DateTimeFormatter.ofPattern(pattern));
+    private static final Faker faker = new Faker(new Locale("en"));
+    private static final Random random = new Random();
 
+    public static String getApprovedCardNumber() {
+        return "4444444444444441";
     }
 
-    public static CardInfo getApprovedCard() {
-        return new CardInfo("4444444444444441", getShiftedMonth(2), getShiftedYear(0), "Danila Leonidov", "888");
+    public static String getDeclinedCardNumber() {
+        return "4444444444444442";
     }
 
-    public static CardInfo getDeclinedCard() {
-        return new CardInfo("4444444444444442", getShiftedMonth(3), getShiftedYear(1), "Danila Leonidov", "777");
+    public static String getRandomCardNumber() {
+        return generateRandomDigits(16);
     }
 
-    public static CardInfo getEmptyCard() {
-        return new CardInfo("", "", "", "", "");
+    public static String getRandomCardNumberWithLength() {
+        int randomNumberLength = random.nextInt(16);
+        return generateRandomDigits(randomNumberLength);
     }
 
-    public static String getShiftedMonth(int monthCount) {
 
-        return LocalDate.now().plusMonths(monthCount).format(DateTimeFormatter.ofPattern("MM"));
+    public static String getOneMonthAgoMonth() {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate oneMonthAgo = currentDate.minusMonths(1);
+        return oneMonthAgo.format(DateTimeFormatter.ofPattern("MM"));
     }
 
-    public static String getShiftedYear(int yearCount) {
-        return LocalDate.now().plusYears(yearCount).format(DateTimeFormatter.ofPattern("YY"));
+    public static String getYearWithOneValue() {
+        return generateRandomDigits(1);
+    }
+    public static String getMonthWithOneValue() {
+        return generateRandomDigits(1);
     }
 
-    public static CardInfo getNumberCard15Symbols() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var month = getShiftedMonth(1);
-        var year = getShiftedYear(1);
-        var cvv = faker.number().digits(3);
-        var number = faker.number().digits(15);
-        return new CardInfo(number, month, year, holder, cvv);
+
+    public static String getCurrentYear() {
+        LocalDate currentDate = LocalDate.now();
+        int currentYear = currentDate.getYear();
+        return String.format("%02d", currentYear % 100);
     }
 
-    public static CardInfo getCardNotInDatabase() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var month = getShiftedMonth(1);
-        var year = getShiftedYear(1);
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444444", month, year, holder, cvv);
+    public static String getCurrentYearPlus5() {
+        int currentYear = Integer.parseInt(getCurrentYear());
+        int yearPlus6 = currentYear + 6;
+        return String.format("%02d", yearPlus6 % 100);
     }
 
-    public static CardInfo getCardMonth1Symbol() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var month = faker.number().digit();
-        var year = getShiftedYear(1);
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444441", month, year, holder, cvv);
+    public static String getPreviousYear() {
+        int currentYear = Integer.parseInt(getCurrentYear());
+        int previousYear = currentYear - 1;
+        return String.format("%02d", previousYear % 100);
     }
 
-    public static CardInfo getCardMonthOver12() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var year = getShiftedYear(1);
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444441", "13", year, holder, cvv);
+    public static String getRandomMonth() {
+        int randomValue = random.nextInt(88) + 12;
+        return String.valueOf(randomValue);
     }
 
-    public static CardInfo getCardMonth00ThisYear() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var year = getShiftedYear(0);
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444441", "00", year, holder, cvv);
+    public static String getInvalidMonth() {
+        return "00";
     }
 
-    public static CardInfo getCardMonth00OverThisYear() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var year = getShiftedYear(1);
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444441", "00", year, holder, cvv);
+    public static String getEmptyMonth() {
+        return "";
     }
 
-    public static CardInfo getCardYear1Symbol() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var month = getShiftedMonth(1);
-        var year = faker.number().digit();
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444441", month, year, holder, cvv);
+    public static String getInvalidYear() {
+        return "00";
     }
 
-    public static CardInfo getCardYearOverThisYearOn6() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var month = getShiftedMonth(1);
-        var year = getShiftedYear(6);
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444441", month, year, holder, cvv);
+    public static String getEmptyYear() {
+        return "";
     }
 
-    public static CardInfo getCardYearUnderThisYear() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var month = getShiftedMonth(1);
-        var year = getShiftedYear(-1);
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444441", month, year, holder, cvv);
+    public static String getEmptyNumberCard() {
+        return "";
     }
 
-    public static CardInfo getCardYear00() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var month = getShiftedMonth(1);
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444441", month, "00", holder, cvv);
+
+    public static String getNextMonth() {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate nextMonth = currentDate.plusMonths(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM");
+        String formattedMonth = nextMonth.format(formatter);
+
+        return formattedMonth;
     }
 
-    public static CardInfo getCardCvv1Symbol() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var month = getShiftedMonth(1);
-        var year = getShiftedYear(1);
-        var cvv = faker.number().digits(1);
-        return new CardInfo("4444444444444441", month, year, holder, cvv);
+
+    public static String getRandomOwnerName() {
+        String[] names = {"Vadim", "Anton", "Dima", "Elena", "Ira", "Kristina", "Vladimir", "Katy"};
+        int randomIndex = random.nextInt(names.length);
+        return names[randomIndex];
     }
 
-    public static CardInfo getCardCvv2Symbols() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var month = getShiftedMonth(1);
-        var year = getShiftedYear(1);
-        var cvv = faker.number().digits(2);
-        return new CardInfo("4444444444444441", month, year, holder, cvv);
+    public static String getRandomCyrillicName() {
+        String[] names = {"Вадим", "Антон", "Дима", "Елена", "Ира", "Кристина", "Владимир", "Катя"};
+        int randomIndex = random.nextInt(names.length);
+        return names[randomIndex];
     }
 
-    public static CardInfo getCardHolder1Word() {
-        var faker = new Faker();
-        var holder = faker.name().firstName();
-        var month = getShiftedMonth(1);
-        var year = getShiftedYear(1);
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444441", month, year, holder, cvv);
+
+    public static String getRandomOwnerNumber() {
+        return String.valueOf(random.nextInt(10));
     }
 
-    public static CardInfo getCardHolderCyrillic() {
-        var faker = new Faker(new Locale("ru"));
-        var holder = faker.name().firstName() + " " + faker.name().lastName();
-        var month = getShiftedMonth(1);
-        var year = getShiftedYear(1);
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444441", month, year, holder, cvv);
+    public static String getSpecialCharactersOwner() {
+        return "!@#$%^&*()_+-";
     }
 
-    public static CardInfo getCardHolderNumeric() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " " + faker.number().digit();
-        var month = getShiftedMonth(1);
-        var year = getShiftedYear(1);
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444441", month, year, holder, cvv);
+    public static String getEmptyOwner() {
+        return "";
     }
 
-    public static CardInfo getCardSpecialSymbols() {
-        var faker = new Faker();
-        var holder = faker.name().firstName() + " %$ * &";
-        var month = getShiftedMonth(1);
-        var year = getShiftedYear(1);
-        var cvv = faker.number().digits(3);
-        return new CardInfo("4444444444444441", month, year, holder, cvv);
+    public static String getRandomCvc() {
+        return generateRandomDigits(3);
     }
 
-    @Value
-    public static class CardInfo {
-        String cardNumber;
-        String month;
-        String year;
-        String cardHolder;
-        String cvc;
+    public static String getSingleDigitCvc() {
+        return generateRandomDigits(1);
+    }
+
+    public static String getDoubleDigitCvc() {
+        return generateRandomDigits(2);
+    }
+
+    public static String getEmptyCvc() {
+        return "";
+    }
+
+    private static String generateRandomDigits(int length) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            sb.append(random.nextInt(10));
+        }
+        return sb.toString();
+    }
+    public static String getCardNumberNothing() {
+        return faker.number().digits(16);
+
+
     }
 }
