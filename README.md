@@ -1,11 +1,14 @@
-**# Дипломная работа по профессии "Тестировщик ПО"**
+# **Дипломная работа по профессии "Тестировщик ПО"**
+
 **Документация:**
-* Отчет об автоматизации - 
+* Отчет об автоматизации - https://github.com/sadk1ng/Diplom/blob/mai/Docs/Report.md
 * План автоматизации тестирования - https://github.com/sadk1ng/Diplom/blob/mai/Docs/Plan.md
-* Отчёт по итогам тестирования  -
-  **Инструкция по запуску автотестов**
+* Отчёт по итогам автоматизации  - https://github.com/sadk1ng/Diplom/blob/mai/Docs/Summary.md
+
+### **Инструкция по запуску автотестов**
+
 **_Подготовка окружения:_**
-  **Установленное ПО:** Chrome, java,Windows 10, Git, IntelliJ IDEA, JDK 11, Docker Desktop
+*   **Установленное ПО:** Chrome, java,Windows 10, Git, IntelliJ IDEA, JDK 11, Docker Desktop
 
 **_Требования для запуска Веб-страницы_**
 1. Склонировать проект git clone https://github.com/sadk1ng/Diplom

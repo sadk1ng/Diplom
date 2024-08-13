@@ -99,13 +99,13 @@ public class DataHelper {
 
 
     public static String getRandomOwnerName() {
-        String[] names = {"Vadim", "Anton", "Dima", "Elena", "Ira", "Kristina", "Vladimir", "Katy"};
+        String[] names = {"Vadim", "Anton", "Dima", "Elena", "Ira", "Kristina", "Oleg", "Katy"};
         int randomIndex = random.nextInt(names.length);
         return names[randomIndex];
     }
 
     public static String getRandomCyrillicName() {
-        String[] names = {"Вадим", "Антон", "Дима", "Елена", "Ира", "Кристина", "Владимир", "Катя"};
+        String[] names = {"Вадим", "Антон", "Дима", "Елена", "Ира", "Кристина", "Олег", "Катя"};
         int randomIndex = random.nextInt(names.length);
         return names[randomIndex];
     }
